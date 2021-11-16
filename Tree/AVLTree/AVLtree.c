@@ -209,8 +209,14 @@ BSTNode *AVLdelete(BSTNode *Node,int key){
 
 
 BSTNode *GetRightMinNode(BSTNode*node){
-    //左边的最小 左小右大的原则 一直向左即可
-    BSTNode *prenode=NULL;
+    
+    /*左边的最小 左小右大的原则 一直向左即可
+    *如果node的right的min就是其本身 
+    *那么直接返回本身就行 因而prenode不能为NULL
+    */
+    
+    BSTNode *prenode=node;
+    
     while(node!=NULL&&node->Lchild!=NULL){
         prenode=node;
         node=node->Lchild;
