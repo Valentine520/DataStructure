@@ -13,10 +13,11 @@ int main() {
     Node= insert_recursion_balance(Node,2);
     Node= insert_recursion_balance(Node,19);
     Node= insert_recursion_balance(Node,20);
+    printf("Before delete:\n");
     traverse(Node);
     Node=AVLdelete(Node,11);
     Node=AVLdelete(Node,2);
-    
+    printf("\nAfter delete:\n");
     traverse(Node);
 //    BSTNode *pretemp=NULL;
 //    BSTNode *temp=NULL;
