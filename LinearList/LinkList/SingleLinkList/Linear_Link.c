@@ -54,6 +54,7 @@ bool ListExist(Link_List *L){
     }
     return flag;
 }
+
 //有副作用吗？？ 没有
 size_t ListLength(Link_List *L){
     Link_List *temp=L->next;
@@ -107,7 +108,7 @@ int LocateElem(Link_List *L,Item data,bool (*compare)(Item data1,Item data2)){
     }
     //如果都没有遇到相等的比较则表示元素不存在
     if(flag) {
-       index=-1;//元素不存在
+        index=-1;//元素不存在
     }
     return index;
 }
@@ -230,7 +231,7 @@ Link_List *Reverse(Link_List*MyList,int k){
         fprintf(stderr,"Invalid number of node.\n");
         return NULL;
     }
-    //在起始时就已经假定进行了一次reverse 即New=List->next 该New就是经过一次reverse的链表
+        //在起始时就已经假定进行了一次reverse 即New=List->next 该New就是经过一次reverse的链表
     else if(k==Length){
         Link_List *New=List->next;//New节点
         Link_List *Old=New->next;//Old节点
@@ -264,4 +265,86 @@ Link_List *Reverse(Link_List*MyList,int k){
         List->next=New;
     }
     return List;
+}
+
+
+void InsertSort(Link_List *L){
+    //对链表采用插入排序
+    //首先不为空
+    Link_List * temp=L->next->next;
+    Link_List * find;//在有序链表中查找插入的位置
+    int size=1;
+    size_t length=ListLength(L);
+    for(int i=1;i<length;i++){
+        //寻找插入的位置
+        find=L->next;//第一个节点
+        int count=0;
+        Link_List*pre=L;
+        while(find->data.data<temp->data.data&&count<size){
+            pre=find;
+            find=find->next;
+            count++;//移动次数
+        }
+        //找到插入的位置在pre->next处
+        Link_List*tail=find;
+        if(count==size){
+            //插入的位置无需改变节点的链接关系
+            temp=temp->next;
+        }
+        else{
+            while(count++<size-1){
+                tail=tail->next;//寻找尾部节点
+            }
+            tail->next=temp->next;
+            Link_List*node=temp;//保存节点
+            temp=temp->next;
+            //两种情况
+            //连上
+            node->next=pre->next;
+            pre->next=node;
+        }
+        size++;//两种均会导致size++
+
+    }
+}
+
+//对有序链表进行有阈值的搜索
+int RandomSearch(Link_List*L,Item data,int t){
+    size_t n=ListLength(L);
+    Link_List*i=L;
+    int fuck=0;
+    while(i!=NULL&&L->data.data<data.data&&fuck<t){
+        int j=rand()%n;
+        int count=0;
+        Link_List*ran=L->next;
+        while(count++<j){
+            ran=ran->next;
+        }
+        if(i->data.data<=ran->data.data&&ran->data.data<=data.data){
+            i=ran;
+            if(i->data.data==data.data){
+                return i->data.data;
+            }
+        }
+        i=i->next;
+        if(i->data.data==data.data){
+            return i->data.data;
+        }
+        fuck++;
+    }
+    if(i==NULL){
+        return -1;
+    }
+    while(i->data.data<data.data){
+        i=i->next;
+        if(i==NULL){
+            return -1;
+        }
+    }
+    if(i->data.data>data.data){
+        return -1;
+    }
+    else{
+        return i->data.data;
+    }
 }
