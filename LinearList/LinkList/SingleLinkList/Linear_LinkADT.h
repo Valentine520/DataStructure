@@ -5,12 +5,13 @@
 #ifndef LINEAR_LINKADT_H
 #define LINEAR_LINKADT_H
 #include <stdlib.h>
-
+#include <time.h>
 //Linear Link  ADT
 //定义data的数据类型
 typedef struct item{
     int data;
 }Item;
+
 typedef _Bool bool;//定义bool数据类型
 
 //单向链表 数据结构
@@ -48,6 +49,11 @@ size_t ListLength(Link_List *L);
  * 对于非法空间则返回失败值*/
 bool GetElem(Link_List *L,int index,Item *data);
 
+//对链表进行排序
+void InsertSort(Link_List *L);
+
+//对有序链表进行有阈值的搜索
+int Search(Link_List*L,Item data,int t);
 //利用compare指定的比较函数的函数指针 进行Elem的定位
 int LocateElem(Link_List *L,Item data,bool (*compare)(Item data1,Item data2) );
 
@@ -72,5 +78,12 @@ void ShowItem(Item item);//打印Item中的元素 辅助traverse 提高移植性
 
 Link_List *Reverse(Link_List*List,int k);//逆转链表中的k个节点
 
+//使用插入排序对链表进行排序操作
+void ListInsertSort(Link_List *L);
+
+//使用随机查找算法查找链表中的元素
+int RandomSearch(Link_List*L,Item data,int t);
+
 #endif //LINEAR_LINKADT_H
+
 
