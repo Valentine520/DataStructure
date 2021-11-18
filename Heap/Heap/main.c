@@ -4,16 +4,19 @@
 
 //Simply test of heap ADT ,including Create Insert Delete and Traverse
 int main(void){
-    int List[]={12,3,1,41,87,91,13,4,8,19};
-    int size=sizeof(List)/sizeof(List[0]);
-    Heap heap;
-    Create(&heap,List,size);
-    heap_traverse(&heap);
-    Insert(&heap,10);
-    Insert(&heap,20);
-    heap_traverse(&heap);
-    Delete(&heap);
-    heap_traverse(&heap);
+    int array[10];
+    int size=sizeof array / sizeof array[0];
+    for(int i=0;i<size;i++){
+        array[i]=i*2-3-i*i;
+    }
+    for(int i=0;i<size;i++){
+        printf("%d ",array[i]);
+    }
+    printf("\n");
+    Heap*heap=BuildHeap(array,size);
+    heap_traverse(heap);
+    printf("%d\n",Find(array,size,3));
+    printf("%d\n",Find(array,size,5));
     return 0;
 }
 
