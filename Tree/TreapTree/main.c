@@ -9,8 +9,8 @@ int main(int argc, char *argv[]) {
     tree=Insert(tree, 23);
     tree=Insert(tree, 11);
     tree=Insert(tree, 98);
-    Delete(&tree,20);
-    Delete(&tree,98);
+    tree= Delete(tree,11);
+    tree= Delete(tree,98);
     Traverse(tree);
     return 0;
 }
