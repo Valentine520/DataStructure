@@ -47,6 +47,7 @@ void HuffmanCreate(Huff **HT,const Item *data,const int *w,int n){
     //开始构造
     for(int j=n+1;j<m+1;j++){
         //查找其中最小的两个节点 包含已经构建好了的新节点
+        //如果使用堆构造可能会更加快捷 不用每次都线性查找
         int index1=FindHuffMin( (*HT),j);
         int index2= FindHuffMin( (*HT),j);
         (*HT)[j].Lchild=index1;
@@ -67,6 +68,7 @@ int FindHuffMin(Huff *HT,int j){
     int min=MAX;
     int site=-1;
     for(int i=1;i<j;i++){
+        //被合并过的flag为1 避免重复操作
         if(HT[i].flag!=0) {
             if ((int) (HT[i].weight) < min) {
                 min = (int) HT[i].weight;
@@ -84,9 +86,11 @@ void HuffmanCode(Huff*HT,HuffmanTable*Table,int n){
     *Table= (HuffmanTable) malloc(sizeof(char*)*(n+1));//赫夫曼表构建 n+1个节点 
     char *cd=(char*)malloc(sizeof(char)*(n));
     cd[n-1]='\0';
+    //从第一个节点开始 j=1
     for(int j=1;j<n+1;j++){
         int start=n-1;//起始位置 
         //向上  c= (HT)[c].parent向上移动
+        //从底向上移动到root 则进行编码工作
         for(int c=j; (HT)[c].parent!=0;c= (HT)[c].parent){
             if( (HT)[ (HT)[c].parent].Lchild==c){
                 cd[--start]='0';
@@ -95,7 +99,7 @@ void HuffmanCode(Huff*HT,HuffmanTable*Table,int n){
                 cd[--start]='1';
             }
         }
-        (*Table)[j]= (char*)malloc(sizeof(char)*(n-start));
+        (*Table)[j]= (char*)malloc(sizeof(char)*(n-start));//按照相应的长度分配空间
         for(int k=0;k<n-start;k++){
             (*Table)[j][k]=cd[start+k];
         }
@@ -130,7 +134,8 @@ void SolveHuffmanCode(Huff *HT,HuffmanTable Table,Item **SolveTable,int n){
     //解码
     for(int i=1;i<n+1;i++){
         int index=0;
-        int site=root_site;
+        int site=root_site;//从根开始
+        //根据010101等编码表进行解码 从顶向下
         while(Table[i][index]!='\0'){
             if(Table[i][index]=='1'){
                 site=HT[site].Rchild;
