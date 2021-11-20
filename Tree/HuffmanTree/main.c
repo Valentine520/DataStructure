@@ -12,8 +12,8 @@ int main() {
         weight[size-i]=i;
     }
     HuffmanCreate(&HT,data,weight,size);
-    HuffmanCode(HT,&table,size);
+    HuffmanCode(HT,&table,size);//编码表table
     Item *solve_table=NULL;
-    SolveHuffmanCode(HT,table,&solve_table,size);
+    SolveHuffmanCode(HT,table,&solve_table,size);//利用编码表解码
     return 0;
 }
