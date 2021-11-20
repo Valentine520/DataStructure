@@ -6,6 +6,11 @@
 #define HUFFMANTREE_HUFFMANTREE_H
 typedef char Item;//数据类型 此处的Huffman树中存储的为字符 A B C D 等
 
+//使用静态链表存储Huffman Tree
+//一共n个节点 则放在前n个位置 而后的位置全用来存放联结节点的空节点 易于访问
+//因为不具有二叉树等其他树的性质 因而对数据结构的要求不是特别高
+//相反 使用标准的树形结构可能会导致对节点的内容进行判断 无法知道从哪里开始 也不知道需要解码的节点在何处
+
 typedef struct huff{
     int weight;//权重
     int parent;//双亲 便于编码
