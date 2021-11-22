@@ -1,17 +1,17 @@
-#include "IntervalTree.h"
+#include "Order_Statistic_Tree.h"
 
-int main() {
-    srand((unsigned int)time(NULL));
+int main(void) {
     RBTreePointer Tree=NULL;
-    Tree= Insert(Tree,(Item){10,rand()%10+10});
-    Tree= Insert(Tree,(Item){11,rand()%10+10});
-
-//    for(int i=0;i<10;i++){
-//       Tree= Insert(Tree,(Item){i,rand()%10+i});
-//    }
-    Item interval1={119,12};
-    RBTreePointer res=Interval_Search(Tree,interval1);
-    printf("Low:%d High:%d Max:%d\n",res->data.low,res->data.high,res->max);
+   for(int i=0;i<30;i++){
+       Tree= Insert(Tree,i);
+   }
     InorderTraverse(Tree,Tree->P);
+    printf("The rank i:\n");
+    RBTreePointer Res=OS_SELECT(Tree,8);
+    printf("%d\n", OS_RANK(Tree,Res));
+    int res= OS_RANK_ELEMENT(Tree,10);
+    printf("%d\n",res);
+    res= OS_RANK_ELEMENT(Tree,29);
+    printf("%d\n",res);
     return 0;
 }
