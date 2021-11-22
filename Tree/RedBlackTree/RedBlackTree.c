@@ -236,8 +236,17 @@ bool RBDelete(RBTreePointer *Tree,Item data){
         y= Minimize(*Restore,z->Rchild);
         y_original_color=y->color;//找到y的位置 即后继节点
         x=y->Rchild;//即将拼接的节点
+        
+        /*
+        * 这一部分是十分关键的！！！！！！
+        * 并不是多余的操作
+        * 本身x如果为nil那么p是随意指向的
+        * 那么如果在后面进行调整的时候是无法完成的
+        * 因而需要修改x的p的指向 令p就是指向的删除的节点
+        */
+        
+        x->P=y;
         if (y!= z->Rchild) {
-            x->P=y;//??
             TransPlant(Tree,y,x);//concat the node
             y->Rchild = z->Rchild;
             y->Rchild->P = y;
